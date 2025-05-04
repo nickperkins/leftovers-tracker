@@ -167,4 +167,24 @@ server {
 
 ## License
 
-[MIT](LICENSE)
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0). This means:
+
+### What you can do:
+- Use the software for commercial purposes
+- Modify the software and create derivative works
+- Distribute copies of the software
+- Place warranty on the software you distribute
+
+### What you must do:
+- Include the original source code when you distribute the software
+- Include a copy of the GPL v3.0 license
+- Indicate significant changes made to the software
+- Make any modifications to the source code available under the GPL v3.0 license
+
+### What you cannot do:
+- Sublicense the software under a different license
+- Hold the authors liable for damages
+
+The full license text is available in the [LICENSE.txt](LICENSE.txt) file in this repository.
+
+This is copyleft software: any derivative work must also be distributed under the GPL v3.0 license.

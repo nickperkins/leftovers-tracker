@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Track leftover meals in freezer and fridge with GraphQL and React",
   "private": true,
+  "license": "GPL-3.0",
   "scripts": {
     "setup": "chmod +x ./setup.sh && ./setup.sh",
     "dev:server": "cd server && npm run dev",
