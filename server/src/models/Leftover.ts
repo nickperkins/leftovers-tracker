@@ -99,7 +99,7 @@ Leftover.init(
       // Custom getter to parse stored JSON string
       get() {
         const rawValue = this.getDataValue("tags");
-        return rawValue ? JSON.parse(rawValue as unknown as string) : [];
+        return rawValue || [];
       },
       // Custom setter to ensure proper JSON storage
       set(value: string[]) {
