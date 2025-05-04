@@ -1,0 +1,40 @@
+# Multi-stage build for the API server
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Install dependencies before copying source code for better layer caching
+COPY server/package*.json ./
+RUN npm ci
+
+# Build TypeScript application
+COPY server/tsconfig.json ./
+COPY server/src ./src
+RUN npm run build
+
+# Production stage with minimal dependencies
+FROM node:20-alpine AS production
+
+WORKDIR /app
+
+# Security: run as non-root user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN chown -R appuser:appgroup /app
+
+# Runtime configuration for production environment
+ENV NODE_ENV=production
+ENV PORT=4000
+ENV DB_PATH=/app/data/database.sqlite
+
+# Copy only production artifacts
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package*.json ./
+RUN npm ci --omit=dev
+
+# Persistent storage for database
+VOLUME /app/data
+
+USER appuser
+EXPOSE 4000
+
+CMD ["node", "dist/index.js"]

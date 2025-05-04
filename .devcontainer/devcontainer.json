@@ -1,0 +1,77 @@
+{
+  "name": "Leftovers Tracker",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        "graphql.vscode-graphql",
+        "graphql.vscode-graphql-syntax",
+        "apollographql.vscode-apollo",
+        "ms-vscode.js-debug",
+        "ms-vscode.js-debug-nightly",
+        "github.copilot",
+        "github.vscode-github-actions",
+        "eamodio.gitlens",
+        "firsttris.vscode-jest-runner",
+        "yoavbls.pretty-ts-errors",
+        "redhat.vscode-yaml",
+        "rangav.vscode-thunder-client"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "git.autofetch": true,
+        "files.autoSave": "afterDelay",
+        "files.autoSaveDelay": 1000,
+        "explorer.fileNesting.enabled": true,
+        "explorer.fileNesting.patterns": {
+          "*.ts": "${capture}.js, ${capture}.d.ts",
+          "tsconfig.json": "tsconfig.*.json",
+          "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml"
+        },
+        "thunder-client.saveToWorkspace": true
+      }
+    }
+  },
+
+  "forwardPorts": [5173, 4000],
+
+  "postCreateCommand": "npm run setup",
+
+  "remoteUser": "node",
+
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22",
+      "nodeGypDependencies": true
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
+    }
+  },
+  "portsAttributes": {
+    "4000": {
+      "label": "graphql"
+    },
+    "5173": {
+      "label": "vite"
+    }
+  }
+}

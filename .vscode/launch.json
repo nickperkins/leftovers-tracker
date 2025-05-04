@@ -1,0 +1,34 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Server",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/server/src/index.ts",
+      "runtimeArgs": ["-r", "ts-node/register"],
+      "outFiles": ["${workspaceFolder}/server/dist/**/*.js"],
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug Client",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/client",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/src/*"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Full Stack",
+      "configurations": ["Debug Server", "Debug Client"]
+    }
+  ]
+}

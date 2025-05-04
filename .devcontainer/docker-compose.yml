@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: /bin/sh -c "cd /workspace && .devcontainer/init-container.sh && sleep infinity"
+    environment:
+      - NODE_ENV=development
+      - SQLITE_PATH=/workspace/database.sqlite
+    ports:
+      - "5173:5173"
+      - "4000:4000"
+    restart: unless-stopped

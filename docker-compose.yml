@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  # Server component - GraphQL API
+  api:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile.server
+    expose:
+      - "4000"
+    volumes:
+      - leftovers-data:/app/data
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+      - CORS_ORIGIN=http://localhost
+      - GRAPHQL_PATH=/graphql
+      - LOG_LEVEL=info
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4000/graphql"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Client application with Nginx for static serving and proxying
+  client:
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile.client
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+# Persistent storage volume for database
+volumes:
+  leftovers-data:
