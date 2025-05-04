@@ -103,6 +103,12 @@ const leftoverTypeDefs = gql`
     Simplified alternative to updateLeftover for this common action
     """
     consumeLeftover(id: ID!): Leftover!
+
+    """
+    Consume a specific portion amount of a leftover
+    Marks the item as fully consumed if the consumed portion equals or exceeds the total portion
+    """
+    consumePortion(id: ID!, amount: Float!): Leftover!
   }
 `;
 

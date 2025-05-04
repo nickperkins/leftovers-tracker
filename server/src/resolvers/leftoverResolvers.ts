@@ -191,6 +191,45 @@ const leftoverResolvers = {
         throw new Error(`Failed to consume leftover: ${error}`);
       }
     },
+
+    /**
+     * Consumes a specific portion amount of a leftover
+     * Decreases the portion value and marks as fully consumed if portion reaches zero
+     */
+    consumePortion: async (
+      _: any,
+      { id, amount }: { id: string; amount: number }
+    ) => {
+      try {
+        const leftover = await Leftover.findByPk(id);
+
+        if (!leftover) {
+          throw new Error(`Leftover with ID ${id} not found`);
+        }
+
+        if (amount <= 0) {
+          throw new Error("Consumption amount must be greater than zero");
+        }
+
+        // Calculate new portion value
+        const newPortion = Math.max(0, leftover.portion - amount);
+
+        // Determine if fully consumed
+        const isFullyConsumed = newPortion === 0;
+
+        // Update the leftover record
+        await leftover.update({
+          portion: newPortion,
+          consumed: isFullyConsumed,
+          // Set consumed date only if fully consumed
+          consumedDate: isFullyConsumed ? new Date() : leftover.consumedDate,
+        });
+
+        return leftover;
+      } catch (error) {
+        throw new Error(`Failed to consume portion: ${error}`);
+      }
+    },
   },
 };
 

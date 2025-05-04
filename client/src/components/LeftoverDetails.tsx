@@ -17,7 +17,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Stack
+  Stack,
+  TextField,
+  MenuItem,
+  InputAdornment
 } from '@mui/material';
 import {
   Kitchen as FridgeIcon,
@@ -25,9 +28,10 @@ import {
   EditOutlined as EditIcon,
   Delete as DeleteIcon,
   CheckCircle as ConsumeIcon,
-  Warning as WarningIcon
+  Warning as WarningIcon,
+  RestaurantMenu as EatPortionIcon
 } from '@mui/icons-material';
-import { GET_LEFTOVER, DELETE_LEFTOVER, CONSUME_LEFTOVER } from '../graphql/leftovers';
+import { GET_LEFTOVER, DELETE_LEFTOVER, CONSUME_LEFTOVER, CONSUME_PORTION } from '../graphql/leftovers';
 import { Leftover, StorageLocation } from '../types/leftover.types';
 
 const formatDate = (dateString: string) => {
@@ -49,6 +53,8 @@ const LeftoverDetails = () => {
   const navigate = useNavigate();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [consumeDialogOpen, setConsumeDialogOpen] = useState(false);
+  const [consumePortionDialogOpen, setConsumePortionDialogOpen] = useState(false);
+  const [portionAmount, setPortionAmount] = useState(0.5);
 
   const { loading, error, data } = useQuery(GET_LEFTOVER, {
     variables: { id },
@@ -74,6 +80,16 @@ const LeftoverDetails = () => {
     refetchQueries: [{ query: GET_LEFTOVER, variables: { id } }]
   });
 
+  const [consumePortion, { loading: consumePortionLoading }] = useMutation(CONSUME_PORTION, {
+    onCompleted: () => {
+      setConsumePortionDialogOpen(false);
+    },
+    onError: (error) => {
+      console.error('Consume portion error:', error);
+    },
+    refetchQueries: [{ query: GET_LEFTOVER, variables: { id } }]
+  });
+
   const handleDelete = () => {
     if (id) {
       deleteLeftover({ variables: { id } });
@@ -83,6 +99,12 @@ const LeftoverDetails = () => {
   const handleConsume = () => {
     if (id) {
       consumeLeftover({ variables: { id } });
+    }
+  };
+
+  const handleConsumePortion = () => {
+    if (id && portionAmount > 0) {
+      consumePortion({ variables: { id, amount: portionAmount } });
     }
   };
 
@@ -123,6 +145,15 @@ const LeftoverDetails = () => {
   }
 
   const expiryStatus = getExpiryStatus(leftover.expiryDate);
+  
+  // Generate options for portion consumption - steps of 0.5
+  const getPortionOptions = (maxPortion: number) => {
+    const options = [];
+    for (let i = 0.5; i <= maxPortion; i += 0.5) {
+      options.push(i);
+    }
+    return options;
+  };
 
   return (
     <Container maxWidth="md">
@@ -211,23 +242,35 @@ const LeftoverDetails = () => {
         </Box>
       </Paper>
 
-      <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        spacing={2}
-      >
-        <Box sx={{ flex: 1 }}>
-          <Button
-            startIcon={<EditIcon />}
-            variant="outlined"
-            component={RouterLink}
-            to={`/edit/${leftover.id}`}
-            fullWidth
-          >
-            Edit
-          </Button>
-        </Box>
+      {!leftover.consumed && (
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          spacing={2}
+        >
+          <Box sx={{ flex: 1 }}>
+            <Button
+              startIcon={<EditIcon />}
+              variant="outlined"
+              component={RouterLink}
+              to={`/edit/${leftover.id}`}
+              fullWidth
+            >
+              Edit
+            </Button>
+          </Box>
 
-        {!leftover.consumed && (
+          <Box sx={{ flex: 1 }}>
+            <Button
+              startIcon={<EatPortionIcon />}
+              variant="outlined"
+              color="primary"
+              onClick={() => setConsumePortionDialogOpen(true)}
+              fullWidth
+            >
+              Consume Portion
+            </Button>
+          </Box>
+
           <Box sx={{ flex: 1 }}>
             <Button
               startIcon={<ConsumeIcon />}
@@ -236,23 +279,23 @@ const LeftoverDetails = () => {
               onClick={() => setConsumeDialogOpen(true)}
               fullWidth
             >
-              Mark as Consumed
+              Consume All
             </Button>
           </Box>
-        )}
 
-        <Box sx={{ flex: leftover.consumed ? 2 : 1 }}>
-          <Button
-            startIcon={<DeleteIcon />}
-            variant="contained"
-            color="error"
-            onClick={() => setDeleteDialogOpen(true)}
-            fullWidth
-          >
-            Delete
-          </Button>
-        </Box>
-      </Stack>
+          <Box sx={{ flex: 1 }}>
+            <Button
+              startIcon={<DeleteIcon />}
+              variant="contained"
+              color="error"
+              onClick={() => setDeleteDialogOpen(true)}
+              fullWidth
+            >
+              Delete
+            </Button>
+          </Box>
+        </Stack>
+      )}
 
       {/* Delete Confirmation Dialog */}
       <Dialog
@@ -283,10 +326,10 @@ const LeftoverDetails = () => {
         open={consumeDialogOpen}
         onClose={() => setConsumeDialogOpen(false)}
       >
-        <DialogTitle>Mark as Consumed</DialogTitle>
+        <DialogTitle>Consume All</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to mark "{leftover.name}" as consumed?
+            Are you sure you want to mark all portions of "{leftover.name}" as consumed?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -298,6 +341,53 @@ const LeftoverDetails = () => {
             disabled={consumeLoading}
           >
             {consumeLoading ? <CircularProgress size={24} /> : 'Confirm'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Consume Portion Dialog */}
+      <Dialog
+        open={consumePortionDialogOpen}
+        onClose={() => setConsumePortionDialogOpen(false)}
+      >
+        <DialogTitle>Consume Portion</DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ mb: 2 }}>
+            Select how much of "{leftover.name}" you want to consume:
+          </DialogContentText>
+          <TextField
+            label="Portion Amount"
+            select
+            fullWidth
+            value={portionAmount}
+            onChange={(e) => setPortionAmount(parseFloat(e.target.value))}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">portion{portionAmount !== 1 ? 's' : ''}</InputAdornment>,
+            }}
+          >
+            {getPortionOptions(leftover.portion).map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+            {leftover.portion - portionAmount === 0 ? (
+              <span>This will mark the item as fully consumed.</span>
+            ) : (
+              <span>This will leave {(leftover.portion - portionAmount).toFixed(1)} portion(s) remaining.</span>
+            )}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConsumePortionDialogOpen(false)}>Cancel</Button>
+          <Button
+            onClick={handleConsumePortion}
+            color="primary"
+            variant="contained"
+            disabled={consumePortionLoading || portionAmount <= 0}
+          >
+            {consumePortionLoading ? <CircularProgress size={24} /> : 'Consume'}
           </Button>
         </DialogActions>
       </Dialog>

@@ -85,3 +85,13 @@ export const CONSUME_LEFTOVER = gql`
   }
   ${LEFTOVER_FRAGMENT}
 `;
+
+// Consumes a specific portion amount of a leftover
+export const CONSUME_PORTION = gql`
+  mutation ConsumePortion($id: ID!, $amount: Float!) {
+    consumePortion(id: $id, amount: $amount) {
+      ...LeftoverFields
+    }
+  }
+  ${LEFTOVER_FRAGMENT}
+`;
