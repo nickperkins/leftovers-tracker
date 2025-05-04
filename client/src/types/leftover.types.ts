@@ -1,4 +1,4 @@
-export type StorageLocation = 'freezer' | 'fridge';
+export type StorageLocation = "freezer" | "fridge";
 
 export interface Leftover {
   id: string;
@@ -8,7 +8,6 @@ export interface Leftover {
   storageLocation: StorageLocation;
   storedDate: string;
   expiryDate: string;
-  ingredients?: string[] | null;
   tags?: string[] | null;
   consumed: boolean;
   consumedDate?: string | null;
@@ -22,7 +21,6 @@ export interface LeftoverInput {
   portion?: number;
   storageLocation: StorageLocation;
   expiryDate: string;
-  ingredients?: string[];
   tags?: string[];
 }
 
@@ -32,7 +30,6 @@ export interface LeftoverUpdateInput {
   portion?: number;
   storageLocation?: StorageLocation;
   expiryDate?: string;
-  ingredients?: string[];
   tags?: string[];
   consumed?: boolean;
   consumedDate?: string;

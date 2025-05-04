@@ -36,8 +36,6 @@ const LeftoverForm = () => {
   const [portion, setPortion] = useState(1);
   const [storageLocation, setStorageLocation] = useState<'freezer' | 'fridge'>('fridge');
   const [expiryDate, setExpiryDate] = useState<Date>(addDays(new Date(), 3)); // Default 3 days from now
-  const [ingredients, setIngredients] = useState<string[]>([]);
-  const [currentIngredient, setCurrentIngredient] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [currentTag, setCurrentTag] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -77,21 +75,9 @@ const LeftoverForm = () => {
       setStorageLocation(leftover.storageLocation);
       // Convert timestamp string to Date object
       setExpiryDate(new Date(Number(leftover.expiryDate)));
-      setIngredients(leftover.ingredients || []);
       setTags(leftover.tags || []);
     }
   }, [isEditing, data]);
-
-  const handleAddIngredient = () => {
-    if (currentIngredient.trim()) {
-      setIngredients([...ingredients, currentIngredient.trim()]);
-      setCurrentIngredient('');
-    }
-  };
-
-  const handleRemoveIngredient = (index: number) => {
-    setIngredients(ingredients.filter((_, i) => i !== index));
-  };
 
   const handleAddTag = () => {
     if (currentTag.trim()) {
@@ -135,7 +121,6 @@ const LeftoverForm = () => {
         portion,
         storageLocation,
         expiryDate: formattedExpiryDate,
-        ingredients: ingredients.length > 0 ? ingredients : undefined,
         tags: tags.length > 0 ? tags : undefined
       };
 
@@ -237,30 +222,6 @@ const LeftoverForm = () => {
               sx={{ mt: 2, width: '100%' }}
             />
           </LocalizationProvider>
-
-          <Box sx={{ mt: 3 }}>
-            <Typography variant="subtitle1">Ingredients</Typography>
-            <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-              <TextField
-                label="Add Ingredient"
-                value={currentIngredient}
-                onChange={(e) => setCurrentIngredient(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddIngredient())}
-                fullWidth
-              />
-              <Button onClick={handleAddIngredient} variant="outlined">Add</Button>
-            </Box>
-            <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 3 }}>
-              {ingredients.map((ingredient, index) => (
-                <Chip
-                  key={index}
-                  label={ingredient}
-                  onDelete={() => handleRemoveIngredient(index)}
-                  sx={{ mb: 1 }}
-                />
-              ))}
-            </Stack>
-          </Box>
 
           <Box sx={{ mt: 3 }}>
             <Typography variant="subtitle1">Tags</Typography>

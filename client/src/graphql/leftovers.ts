@@ -13,7 +13,6 @@ export const LEFTOVER_FRAGMENT = gql`
     storageLocation
     storedDate
     expiryDate
-    ingredients
     tags
     consumed
     consumedDate

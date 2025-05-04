@@ -17,7 +17,6 @@ const leftoverTypeDefs = gql`
     storageLocation: StorageLocation!
     storedDate: String! # ISO timestamp as string for client compatibility
     expiryDate: String! # ISO timestamp as string for client compatibility
-    ingredients: [String]
     tags: [String]
     consumed: Boolean!
     consumedDate: String # ISO timestamp, null if not yet consumed
@@ -43,7 +42,6 @@ const leftoverTypeDefs = gql`
     portion: Float
     storageLocation: StorageLocation!
     expiryDate: String! # Expected as millisecond timestamp
-    ingredients: [String]
     tags: [String]
   }
 
@@ -57,7 +55,6 @@ const leftoverTypeDefs = gql`
     portion: Float
     storageLocation: StorageLocation
     expiryDate: String
-    ingredients: [String]
     tags: [String]
     consumed: Boolean
     consumedDate: String

@@ -66,8 +66,7 @@ const Dashboard = () => {
         data.leftovers.filter((leftover: Leftover) =>
           leftover.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           leftover.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          leftover.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
-          leftover.ingredients?.some(ingredient => ingredient.toLowerCase().includes(searchTerm.toLowerCase()))
+          leftover.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
         )
       );
     }
@@ -117,7 +116,7 @@ const Dashboard = () => {
         fullWidth
         margin="normal"
         variant="outlined"
-        placeholder="Search leftovers by name, tags, or ingredients..."
+        placeholder="Search leftovers by name, description, or tags..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         InputProps={{

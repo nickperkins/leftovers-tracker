@@ -13,7 +13,6 @@ export interface LeftoverAttributes {
   storageLocation: "freezer" | "fridge";
   storedDate: Date;
   expiryDate: Date;
-  ingredients?: string[];
   tags?: string[];
   consumed: boolean;
   consumedDate?: Date;
@@ -43,7 +42,6 @@ class Leftover
   public storageLocation!: "freezer" | "fridge";
   declare storedDate: Date;
   declare expiryDate: Date;
-  public ingredients?: string[];
   public tags?: string[];
   public consumed!: boolean;
   declare consumedDate?: Date;
@@ -93,19 +91,6 @@ Leftover.init(
       get() {
         const date = this.getDataValue("expiryDate");
         return date ? new Date(date) : null;
-      },
-    },
-    ingredients: {
-      type: DataTypes.JSON,
-      allowNull: true,
-      // Custom getter to parse stored JSON string
-      get() {
-        const rawValue = this.getDataValue("ingredients");
-        return rawValue ? JSON.parse(rawValue as unknown as string) : [];
-      },
-      // Custom setter to ensure proper JSON storage
-      set(value: string[]) {
-        this.setDataValue("ingredients", value);
       },
     },
     tags: {

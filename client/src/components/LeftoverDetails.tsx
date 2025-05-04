@@ -198,23 +198,12 @@ const LeftoverDetails = () => {
             </Stack>
           </Stack>
 
-          {leftover.ingredients && leftover.ingredients.length > 0 && (
-            <Box sx={{ mt: 3 }}>
-              <Typography variant="h6" gutterBottom>Ingredients</Typography>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                {leftover.ingredients.map((ingredient, index) => (
-                  <Chip key={index} label={ingredient} />
-                ))}
-              </Box>
-            </Box>
-          )}
-
           {leftover.tags && leftover.tags.length > 0 && (
             <Box sx={{ mt: 3 }}>
               <Typography variant="h6" gutterBottom>Tags</Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                 {leftover.tags.map((tag, index) => (
-                  <Chip key={index} label={tag} variant="outlined" />
+                  <Chip key={index} label={tag} />
                 ))}
               </Box>
             </Box>
