@@ -71,10 +71,23 @@ Leftover.init(
       type: DataTypes.FLOAT,
       allowNull: false,
       defaultValue: 1,
+      validate: {
+        isPositive(value: number) {
+          if (value <= 0) {
+            throw new Error("portion must be positive");
+          }
+        }
+      }
     },
     storageLocation: {
       type: DataTypes.ENUM("freezer", "fridge"),
       allowNull: false,
+      validate: {
+        isIn: {
+          args: [["freezer", "fridge"]],
+          msg: "invalid storage location"
+        }
+      }
     },
     storedDate: {
       type: DataTypes.DATE,
@@ -88,6 +101,11 @@ Leftover.init(
     expiryDate: {
       type: DataTypes.DATE,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: "expiryDate is required"
+        }
+      },
       get() {
         const date = this.getDataValue("expiryDate");
         return date ? new Date(date) : null;

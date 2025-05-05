@@ -18,10 +18,15 @@ const parseOrigins = (origins: string | undefined): string | string[] => {
   return originList.length > 1 ? originList : originList[0];
 };
 
+// Jest sets NODE_ENV to 'test' automatically, but we want to respect the user's
+// explicit setting or default to 'development' in our tests
+const nodeEnv = process.env.NODE_ENV === 'test' && !process.env.NODE_ENV_OVERRIDE ?
+  'development' : (process.env.NODE_ENV || 'development');
+
 const env = {
   // Server configuration
   PORT: parseInt(process.env.PORT || "4000", 10),
-  NODE_ENV: process.env.NODE_ENV || "development",
+  NODE_ENV: nodeEnv,
 
   // Database
   DB_PATH: process.env.SQLITE_PATH || process.env.DB_PATH || "database.sqlite",
@@ -33,12 +38,12 @@ const env = {
   GRAPHQL_PATH: process.env.GRAPHQL_PATH || "/graphql",
 
   // Determine if we're in production
-  isProd: process.env.NODE_ENV === "production",
+  isProd: nodeEnv === "production",
 
   // Logging
   LOG_LEVEL:
     process.env.LOG_LEVEL ||
-    (process.env.NODE_ENV === "production" ? "info" : "debug"),
+    (nodeEnv === "production" ? "info" : "debug"),
 };
 
 export default env;
