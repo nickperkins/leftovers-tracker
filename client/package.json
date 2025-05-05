@@ -8,7 +8,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:contract": "node --experimental-vm-modules node_modules/.bin/jest --config jest.contract.config.js",
+    "test:contract:watch": "node --experimental-vm-modules node_modules/.bin/jest --config jest.contract.config.js --watch",
+    "pact:generate": "npm run test:contract"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
@@ -25,6 +28,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@pact-foundation/pact": "^15.0.1",
+    "@pact-foundation/pact-node": "^10.18.0",
+    "@types/jest": "^29.5.14",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
@@ -32,6 +38,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.2",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
     "vite": "^6.3.1"

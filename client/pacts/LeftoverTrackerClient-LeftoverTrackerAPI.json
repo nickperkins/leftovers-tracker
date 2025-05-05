@@ -1,0 +1,73 @@
+{
+  "consumer": {
+    "name": "LeftoverTrackerClient"
+  },
+  "interactions": [
+    {
+      "description": "a request for all leftovers",
+      "request": {
+        "body": {
+          "query": "query GetLeftovers($location: StorageLocation) {\n  leftovers(location: $location) {\n    ...LeftoverFields\n  }\n}\n\nfragment LeftoverFields on Leftover {\n  id\n  name\n  description\n  portion\n  storageLocation\n  storedDate\n  expiryDate\n  tags\n  consumed\n  consumedDate\n  createdAt\n  updatedAt\n}",
+          "variables": {
+            "location": null
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body.query": {
+            "match": "regex",
+            "regex": "query\\s*GetLeftovers\\(\\$location:\\s*StorageLocation\\)\\s*\\{\\s*leftovers\\(location:\\s*\\$location\\)\\s*\\{\\s*\\.\\.\\.LeftoverFields\\s*\\}\\s*\\}\\s*fragment\\s*LeftoverFields\\s*on\\s*Leftover\\s*\\{\\s*id\\s*name\\s*description\\s*portion\\s*storageLocation\\s*storedDate\\s*expiryDate\\s*tags\\s*consumed\\s*consumedDate\\s*createdAt\\s*updatedAt\\s*\\}"
+          }
+        },
+        "method": "POST",
+        "path": "/graphql"
+      },
+      "response": {
+        "body": {
+          "data": {
+            "leftovers": [
+              {
+                "consumed": false,
+                "consumedDate": null,
+                "createdAt": "2025-05-01T12:00:00Z",
+                "description": "Homemade beef lasagna",
+                "expiryDate": "2025-05-15T12:00:00Z",
+                "id": "1",
+                "name": "Lasagna",
+                "portion": 2,
+                "storageLocation": "FREEZER",
+                "storedDate": "2025-05-01T12:00:00Z",
+                "tags": [
+                  "pasta",
+                  "beef"
+                ],
+                "updatedAt": "2025-05-01T12:00:00Z"
+              }
+            ]
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "15.0.1"
+    },
+    "pactRust": {
+      "ffi": "0.4.22",
+      "models": "1.2.3"
+    },
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  },
+  "provider": {
+    "name": "LeftoverTrackerAPI"
+  }
+}

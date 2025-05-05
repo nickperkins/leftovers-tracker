@@ -12,7 +12,10 @@
     "build:server": "cd server && npm run build",
     "build:client": "cd client && npm run build",
     "build": "npm run build:server && npm run build:client",
-    "start": "cd server && npm start"
+    "start": "cd server && npm start",
+    "test:contract:generate": "cd client && npm run pact:generate",
+    "test:contract:verify": "cd server && npm run pact:verify",
+    "test:contract": "npm run test:contract:generate && npm run test:contract:verify"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

@@ -47,7 +47,7 @@
 
   "forwardPorts": [5173, 4000],
 
-  "postCreateCommand": "npm run setup",
+  // "postCreateCommand": "npm run setup",
 
   "remoteUser": "node",
 

@@ -20,7 +20,7 @@ connectDB();
  * - Configures GraphQL with schema and resolvers
  * - Starts HTTP listener on configured port
  */
-async function startServer() {
+export async function startServer() {
   const app = express();
 
   /**
@@ -68,7 +68,7 @@ async function startServer() {
   );
 
   // Start HTTP server and log connection information
-  app.listen(env.PORT, () => {
+  const httpServer = app.listen(env.PORT, () => {
     console.log(`Server running in ${env.NODE_ENV} mode on port ${env.PORT}`);
     console.log(
       `GraphQL endpoint: http://localhost:${env.PORT}${env.GRAPHQL_PATH}`
@@ -90,6 +90,13 @@ async function startServer() {
       `);
     }
   });
+
+  return {
+    server,
+    httpServer,
+    app,
+    port: env.PORT
+  };
 }
 
 // Handle any startup errors gracefully
