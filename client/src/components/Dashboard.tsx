@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as React from 'react'; // Add explicit React import for JSX namespace
-import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client/react/hooks';
 import { useSearchParams, Link as RouterLink } from 'react-router-dom';
 import { format, differenceInDays } from 'date-fns'; // Remove parseISO import
 import {
@@ -92,14 +92,14 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }} data-testid="loading-indicator">
         <CircularProgress />
       </Box>
     );
   }
 
   if (error) {
-    return <Alert severity="error">Error loading leftovers: {error.message}</Alert>;
+    return <Alert severity="error" data-testid="error-alert">Error loading leftovers: {error.message}</Alert>;
   }
 
   const title = locationParam
@@ -108,7 +108,7 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h4" component="h1" gutterBottom data-testid="dashboard-title">
         {title}
       </Typography>
 
@@ -127,10 +127,11 @@ const Dashboard = () => {
           ),
         }}
         sx={{ mb: 3 }}
+        data-testid="search-input"
       />
 
       {filteredLeftovers.length === 0 ? (
-        <Alert severity="info" sx={{ mt: 2 }}>
+        <Alert severity="info" sx={{ mt: 2 }} data-testid="no-leftovers-alert">
           No leftovers found. Add some leftovers to start tracking!
         </Alert>
       ) : (
@@ -141,16 +142,18 @@ const Dashboard = () => {
               const expiryStatus = getExpiryStatus(leftover.expiryDate);
 
               return (
-                <Box key={leftover.id} sx={{ 
-                  width: { 
-                    xs: '100%', 
-                    sm: '50%', 
+                <Box key={leftover.id} sx={{
+                  width: {
+                    xs: '100%',
+                    sm: '50%',
                     md: '33.333%',
-                    lg: '25%' 
-                  }, 
+                    lg: '25%'
+                  },
                   mb: 3,
                   px: 2
-                }}>
+                }}
+                data-testid={`leftover-card-${leftover.id}`}
+                >
                   <Card
                     variant="outlined"
                     sx={{
@@ -161,18 +164,19 @@ const Dashboard = () => {
                   >
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Typography variant="h6" component="div">
+                        <Typography variant="h6" component="div" data-testid={`leftover-name-${leftover.id}`}>
                           {leftover.name}
                         </Typography>
                         <Chip
                           size="small"
                           icon={getLocationIcon(leftover.storageLocation)}
                           label={leftover.storageLocation}
+                          data-testid={`leftover-location-${leftover.id}`}
                         />
                       </Box>
 
                       {leftover.description && (
-                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }} data-testid={`leftover-description-${leftover.id}`}>
                           {leftover.description}
                         </Typography>
                       )}
@@ -184,11 +188,12 @@ const Dashboard = () => {
                           icon={expiryStatus.icon || undefined}
                           label={expiryStatus.label}
                           sx={{ mr: 1 }}
+                          data-testid={`leftover-expiry-${leftover.id}`}
                         />
-                        <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+                        <Typography variant="caption" display="block" sx={{ mt: 1 }} data-testid={`leftover-stored-${leftover.id}`}>
                           Stored: {formatDate(leftover.storedDate)}
                         </Typography>
-                        <Typography variant="caption" display="block">
+                        <Typography variant="caption" display="block" data-testid={`leftover-expires-${leftover.id}`}>
                           Expires: {formatDate(leftover.expiryDate)}
                         </Typography>
                       </Box>
@@ -201,6 +206,7 @@ const Dashboard = () => {
                               label={tag}
                               size="small"
                               variant="outlined"
+                              data-testid={`leftover-tag-${leftover.id}-${tag}`}
                             />
                           ))}
                         </Box>
@@ -211,6 +217,7 @@ const Dashboard = () => {
                         size="small"
                         component={RouterLink}
                         to={`/details/${leftover.id}`}
+                        data-testid={`view-details-btn-${leftover.id}`}
                       >
                         View Details
                       </Button>
@@ -218,6 +225,7 @@ const Dashboard = () => {
                         size="small"
                         component={RouterLink}
                         to={`/edit/${leftover.id}`}
+                        data-testid={`edit-btn-${leftover.id}`}
                       >
                         Edit
                       </Button>
@@ -231,23 +239,25 @@ const Dashboard = () => {
 
       {filteredLeftovers.filter(item => item.consumed).length > 0 && (
         <Box sx={{ mt: 4 }}>
-          <Typography variant="h5" component="h2" gutterBottom>
+          <Typography variant="h5" component="h2" gutterBottom data-testid="consumed-items-title">
             Consumed Items
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', mx: -2 }}>
             {filteredLeftovers
               .filter(item => item.consumed)
               .map(leftover => (
-                <Box key={leftover.id} sx={{ 
-                  width: { 
-                    xs: '100%', 
-                    sm: '50%', 
+                <Box key={leftover.id} sx={{
+                  width: {
+                    xs: '100%',
+                    sm: '50%',
                     md: '33.333%',
-                    lg: '25%' 
-                  }, 
+                    lg: '25%'
+                  },
                   mb: 3,
                   px: 2
-                }}>
+                }}
+                data-testid={`consumed-card-${leftover.id}`}
+                >
                   <Card
                     variant="outlined"
                     sx={{
@@ -259,17 +269,18 @@ const Dashboard = () => {
                   >
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Typography variant="h6" component="div">
+                        <Typography variant="h6" component="div" data-testid={`consumed-name-${leftover.id}`}>
                           {leftover.name}
                         </Typography>
                         <Chip
                           size="small"
                           label="Consumed"
+                          data-testid={`consumed-chip-${leftover.id}`}
                         />
                       </Box>
 
                       {leftover.consumedDate && (
-                        <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+                        <Typography variant="caption" display="block" sx={{ mt: 1 }} data-testid={`consumed-date-${leftover.id}`}>
                           Consumed on: {formatDate(leftover.consumedDate)}
                         </Typography>
                       )}
@@ -279,6 +290,7 @@ const Dashboard = () => {
                         size="small"
                         component={RouterLink}
                         to={`/details/${leftover.id}`}
+                        data-testid={`consumed-view-details-btn-${leftover.id}`}
                       >
                         View Details
                       </Button>

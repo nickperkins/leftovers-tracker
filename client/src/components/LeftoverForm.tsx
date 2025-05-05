@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client/react/hooks';
 import {
   Container,
   Typography,
@@ -148,24 +148,24 @@ const LeftoverForm = () => {
 
   if (fetchLoading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }} data-testid="loading-indicator">
         <CircularProgress />
       </Box>
     );
   }
 
   if (fetchError) {
-    return <Alert severity="error">Error loading leftover: {fetchError.message}</Alert>;
+    return <Alert severity="error" data-testid="error-alert">Error loading leftover: {fetchError.message}</Alert>;
   }
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h4" component="h1" gutterBottom data-testid="form-title">
         {isEditing ? 'Edit Leftover' : 'Add New Leftover'}
       </Typography>
 
       {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+        <Alert severity="error" sx={{ mb: 3 }} data-testid="form-error">
           {error}
         </Alert>
       )}
@@ -179,6 +179,7 @@ const LeftoverForm = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            data-testid="name-input"
           />
 
           <TextField
@@ -189,6 +190,7 @@ const LeftoverForm = () => {
             rows={2}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            data-testid="description-input"
           />
 
           <TextField
@@ -200,17 +202,18 @@ const LeftoverForm = () => {
             onChange={(e) => setPortion(parseFloat(e.target.value))}
             inputProps={{ min: 0.5, step: 0.5 }}
             required
+            data-testid="portion-input"
           />
 
-          <FormControl margin="normal" fullWidth>
+          <FormControl margin="normal" fullWidth data-testid="location-control">
             <FormLabel>Storage Location</FormLabel>
             <RadioGroup
               row
               value={storageLocation}
               onChange={(e) => setStorageLocation(e.target.value as 'freezer' | 'fridge')}
             >
-              <FormControlLabel value="fridge" control={<Radio />} label="Fridge" />
-              <FormControlLabel value="freezer" control={<Radio />} label="Freezer" />
+              <FormControlLabel value="fridge" control={<Radio data-testid="fridge-radio" />} label="Fridge" />
+              <FormControlLabel value="freezer" control={<Radio data-testid="freezer-radio" />} label="Freezer" />
             </RadioGroup>
           </FormControl>
 
@@ -220,11 +223,12 @@ const LeftoverForm = () => {
               value={expiryDate}
               onChange={(newValue) => newValue && setExpiryDate(newValue)}
               sx={{ mt: 2, width: '100%' }}
+              data-testid="expiry-date-picker"
             />
           </LocalizationProvider>
 
           <Box sx={{ mt: 3 }}>
-            <Typography variant="subtitle1">Tags</Typography>
+            <Typography variant="subtitle1" data-testid="tags-title">Tags</Typography>
             <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
               <TextField
                 label="Add Tag"
@@ -232,16 +236,18 @@ const LeftoverForm = () => {
                 onChange={(e) => setCurrentTag(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
                 fullWidth
+                data-testid="tag-input"
               />
-              <Button onClick={handleAddTag} variant="outlined">Add</Button>
+              <Button onClick={handleAddTag} variant="outlined" data-testid="add-tag-button">Add</Button>
             </Box>
-            <Stack direction="row" spacing={1} flexWrap="wrap">
+            <Stack direction="row" spacing={1} flexWrap="wrap" data-testid="tags-container">
               {tags.map((tag, index) => (
                 <Chip
                   key={index}
                   label={tag}
                   onDelete={() => handleRemoveTag(index)}
                   sx={{ mb: 1 }}
+                  data-testid={`tag-chip-${tag}`}
                 />
               ))}
             </Stack>
@@ -253,13 +259,15 @@ const LeftoverForm = () => {
               variant="contained"
               disabled={isLoading}
               fullWidth
+              data-testid="submit-button"
             >
-              {isLoading ? <CircularProgress size={24} /> : (isEditing ? 'Update' : 'Save')}
+              {isLoading ? <CircularProgress size={24} data-testid="submit-loading" /> : (isEditing ? 'Update' : 'Save')}
             </Button>
             <Button
               variant="outlined"
               onClick={() => navigate(-1)}
               fullWidth
+              data-testid="cancel-button"
             >
               Cancel
             </Button>

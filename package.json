@@ -12,12 +12,19 @@
     "build:server": "cd server && npm run build",
     "build:client": "cd client && npm run build",
     "build": "npm run build:server && npm run build:client",
-    "start": "cd server && npm start"
+    "start": "cd server && npm start",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:client": "cd client && npm test",
+    "test:server": "cd server && npm test",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "jest": "^29.7.0"
   },
   "engines": {
     "node": ">=22.0.0"
-  }
+  },
+  "type": "module"
 }

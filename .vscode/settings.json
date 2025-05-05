@@ -1,0 +1,12 @@
+{
+  "jest.disabledWorkspaceFolders": [],
+  "jest.jestCommandLine": "npm test --",
+  "jest.runMode": {
+    "type": "watch",
+    "singleClick": "test-src-file",
+    "onStartup": ["all-tests"],
+  },
+  "jest.testExplorer": {
+    "enabled": true
+  }
+}

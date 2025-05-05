@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client/react/hooks';
 import { format, parseISO, differenceInDays } from 'date-fns';
 import {
   Container,
@@ -145,7 +145,7 @@ const LeftoverDetails = () => {
   }
 
   const expiryStatus = getExpiryStatus(leftover.expiryDate);
-  
+
   // Generate options for portion consumption - steps of 0.5
   const getPortionOptions = (maxPortion: number) => {
     const options = [];
@@ -196,9 +196,9 @@ const LeftoverDetails = () => {
           )}
 
           <Stack spacing={3} sx={{ mb: 3 }}>
-            <Stack 
-              direction={{ xs: 'column', sm: 'row' }} 
-              spacing={4} 
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={4}
               justifyContent="space-between"
             >
               <Box sx={{ flex: '1 1', minWidth: { xs: '100%', sm: '45%' }}}>
@@ -212,9 +212,9 @@ const LeftoverDetails = () => {
               </Box>
             </Stack>
 
-            <Stack 
-              direction={{ xs: 'column', sm: 'row' }} 
-              spacing={4} 
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={4}
               justifyContent="space-between"
             >
               <Box sx={{ flex: '1 1', minWidth: { xs: '100%', sm: '45%' }}}>

@@ -2,7 +2,7 @@
  * GraphQL Schema definitions for the Leftover entity
  * Defines types, inputs, queries and mutations for leftover tracking
  */
-import { gql } from "apollo-server-express";
+import { gql } from "graphql-tag";
 
 const leftoverTypeDefs = gql`
   """
