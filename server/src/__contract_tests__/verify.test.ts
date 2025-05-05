@@ -1,7 +1,7 @@
 import { describe, test, beforeAll, afterAll } from '@jest/globals';
 import { Verifier } from '@pact-foundation/pact';
 import path from 'path';
-import { startServer, stopServer } from '../index';
+import { startServer } from '../index';
 
 // Import server types/models
 import Leftover from '../models/Leftover';
