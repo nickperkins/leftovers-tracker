@@ -3,7 +3,8 @@
  * Sets up Express with Apollo GraphQL server and configures middleware
  */
 import express from "express";
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
 import { connectDB } from "./config/db";
 import leftoverTypeDefs from "./schemas/leftoverSchema";
@@ -53,18 +54,18 @@ async function startServer() {
     resolvers: [leftoverResolvers],
   });
 
+  // Start the Apollo server before applying middleware
   await server.start();
 
-  /**
-   * Mount Apollo middleware on Express
-   * Using path from configuration and disabling Apollo's CORS
-   * in favor of the Express CORS middleware
-   */
-  server.applyMiddleware({
-    app: app as any,
-    path: env.GRAPHQL_PATH,
-    cors: false, // Express already handles CORS
-  });
+  // Apply GraphQL middleware with proper typing
+  app.use(
+    env.GRAPHQL_PATH,
+    cors(corsOptions),
+    express.json(),
+    expressMiddleware(server, {
+      context: async ({ req }) => ({ req }),
+    }) as express.RequestHandler
+  );
 
   // Start HTTP server and log connection information
   app.listen(env.PORT, () => {
