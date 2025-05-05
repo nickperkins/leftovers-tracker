@@ -33,6 +33,7 @@ type ExpiryStatus = {
   icon: React.ReactElement | null;
 };
 
+// Format date from Unix timestamp string to human-readable format
 const formatDate = (dateString: string) => {
   try {
     // Convert timestamp string to number and create Date object
@@ -141,13 +142,13 @@ const Dashboard = () => {
               const expiryStatus = getExpiryStatus(leftover.expiryDate);
 
               return (
-                <Box key={leftover.id} sx={{ 
-                  width: { 
-                    xs: '100%', 
-                    sm: '50%', 
+                <Box key={leftover.id} sx={{
+                  width: {
+                    xs: '100%',
+                    sm: '50%',
                     md: '33.333%',
-                    lg: '25%' 
-                  }, 
+                    lg: '25%'
+                  },
                   mb: 3,
                   px: 2
                 }}>
@@ -238,13 +239,13 @@ const Dashboard = () => {
             {filteredLeftovers
               .filter(item => item.consumed)
               .map(leftover => (
-                <Box key={leftover.id} sx={{ 
-                  width: { 
-                    xs: '100%', 
-                    sm: '50%', 
+                <Box key={leftover.id} sx={{
+                  width: {
+                    xs: '100%',
+                    sm: '50%',
                     md: '33.333%',
-                    lg: '25%' 
-                  }, 
+                    lg: '25%'
+                  },
                   mb: 3,
                   px: 2
                 }}>

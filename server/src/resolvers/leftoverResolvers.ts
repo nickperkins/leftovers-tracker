@@ -181,9 +181,12 @@ const leftoverResolvers = {
           throw new Error(`Leftover with ID ${id} not found`);
         }
 
+        // Use current time as consumed date
+        const consumedDate = new Date();
+
         await leftover.update({
           consumed: true,
-          consumedDate: new Date(),
+          consumedDate,
         });
 
         return leftover;
@@ -217,12 +220,14 @@ const leftoverResolvers = {
         // Determine if fully consumed
         const isFullyConsumed = newPortion === 0;
 
+        // Create current timestamp if fully consumed
+        const consumedDate = isFullyConsumed ? new Date() : leftover.consumedDate;
+
         // Update the leftover record
         await leftover.update({
           portion: newPortion,
           consumed: isFullyConsumed,
-          // Set consumed date only if fully consumed
-          consumedDate: isFullyConsumed ? new Date() : leftover.consumedDate,
+          consumedDate,
         });
 
         return leftover;

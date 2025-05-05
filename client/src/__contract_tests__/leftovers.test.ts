@@ -3,20 +3,24 @@ import { GraphQLInteraction } from '@pact-foundation/pact/src/dsl/graphql';
 import { GET_LEFTOVERS } from '../graphql/leftovers';
 import { print } from 'graphql';
 
-// Sample leftover data that matches your schema
+// Current date for timestamps
+const currentDate = new Date('2025-05-01T12:00:00Z');
+const expiryDate = new Date('2025-05-15T12:00:00Z');
+
+// Sample leftover data that matches your schema with Unix timestamps
 const leftoverExample = {
   id: '1',
   name: 'Lasagna',
   description: 'Homemade beef lasagna',
   portion: 2,
   storageLocation: 'FREEZER',
-  storedDate: '2025-05-01T12:00:00Z',
-  expiryDate: '2025-05-15T12:00:00Z',
+  storedDate: currentDate.getTime().toString(),
+  expiryDate: expiryDate.getTime().toString(),
   tags: ['pasta', 'beef'],
   consumed: false,
   consumedDate: null,
-  createdAt: '2025-05-01T12:00:00Z',
-  updatedAt: '2025-05-01T12:00:00Z'
+  createdAt: currentDate.getTime().toString(),
+  updatedAt: currentDate.getTime().toString()
 };
 
 describe('Leftovers API Contract Tests', () => {

@@ -31,19 +31,18 @@
               {
                 "consumed": false,
                 "consumedDate": null,
-                "createdAt": "2025-05-01T12:00:00Z",
+                "createdAt": "1746100800000",
                 "description": "Homemade beef lasagna",
-                "expiryDate": "2025-05-15T12:00:00Z",
+                "expiryDate": "1747310400000",
                 "id": "1",
                 "name": "Lasagna",
                 "portion": 2,
-                "storageLocation": "FREEZER",
-                "storedDate": "2025-05-01T12:00:00Z",
+                "storageLocation": "freezer",
+                "storedDate": "1746100800000",
                 "tags": [
                   "pasta",
                   "beef"
-                ],
-                "updatedAt": "2025-05-01T12:00:00Z"
+                ]
               }
             ]
           }
