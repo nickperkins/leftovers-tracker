@@ -3,7 +3,6 @@
  * Sets up Express with Apollo GraphQL server and configures middleware
  */
 import express from "express";
-import http from "http";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
@@ -100,47 +99,5 @@ export async function startServer() {
   };
 }
 
-/**
- * Gracefully shuts down the server and related resources
- * Ensures all connections are properly closed
- */
-export async function stopServer(serverInfo: { 
-  server: ApolloServer, 
-  httpServer: http.Server,
-  app?: express.Application
-}) {
-  try {
-    const { server, httpServer } = serverInfo;
-    
-    // Stop Apollo server
-    if (server) {
-      await server.stop();
-      console.log('Apollo server stopped');
-    }
-    
-    // Close HTTP server
-    if (httpServer && httpServer.listening) {
-      await new Promise<void>((resolve, reject) => {
-        httpServer.close((err: Error | undefined) => {
-          if (err) {
-            console.error('Error closing HTTP server:', err);
-            reject(err);
-          } else {
-            console.log('HTTP server closed');
-            resolve();
-          }
-        });
-      });
-    }
-    
-    return true;
-  } catch (error) {
-    console.error('Error during server shutdown:', error);
-    return false;
-  }
-}
-
 // Handle any startup errors gracefully
-if (require.main === module) {
-  startServer().catch((error) => console.error("Error starting server:", error));
-}
+startServer().catch((error) => console.error("Error starting server:", error));
