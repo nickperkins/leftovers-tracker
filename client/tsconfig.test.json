@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "types": [
+      "@testing-library/jest-dom",
+      "jest"
+    ],
+    "jsx": "react-jsx",
+    "paths": {
+      "hooks/*": ["src/hooks/*"],
+      "components/*": ["src/components/*"],
+      "graphql/*": ["src/graphql/*"],
+      "types/*": ["src/types/*"],
+      "contexts/*": ["src/contexts/*"],
+      "lib/*": ["src/lib/*"]
+    }
+  },
+  "include": ["src", "setupTests.ts"]
+}

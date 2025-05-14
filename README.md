@@ -1,5 +1,10 @@
 # Leftovers Tracker
 
+[![Client CI](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci-client.yml/badge.svg)](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci-client.yml)
+[![codecov-client](https://codecov.io/gh/nickperkins/leftovers-tracker/branch/main/graph/badge.svg?flag=client)](https://codecov.io/gh/nickperkins/leftovers-tracker)
+[![Server CI](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci-server.yml/badge.svg)](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci-server.yml)
+[![codecov-server](https://codecov.io/gh/nickperkins/leftovers-tracker/branch/main/graph/badge.svg?flag=server)](https://codecov.io/gh/nickperkins/leftovers-tracker)
+
 A web application to track leftover meals in your freezer or fridge using GraphQL and React.
 
 ## Features
@@ -65,7 +70,7 @@ The GraphQL API is available at http://localhost:4000/graphql when the server is
 ### Environment Configuration
 
 Both the client and server use environment variables for configuration. Example files are provided in their respective directories:
-- Client: `/client/.env.example` 
+- Client: `/client/.env.example`
 - Server: `/server/.env.example`
 
 All `.env` files are excluded from git to protect sensitive information. Only the example files are included in the repository.
@@ -118,10 +123,10 @@ The project includes Docker configuration for containerized deployment with Ngin
    ```bash
    # Build and start the application
    docker-compose up -d
-   
+
    # View logs
    docker-compose logs -f
-   
+
    # Stop the application
    docker-compose down
    ```
@@ -164,6 +169,11 @@ server {
     }
 }
 ```
+
+## Planning Archive
+
+- The full project planning folder has been archived as `.planning/archives/final-20250514.zip`.
+- This archive contains all research, planning, and documentation for the refactor project.
 
 ## License
 
