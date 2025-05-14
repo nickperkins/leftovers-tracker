@@ -5,12 +5,14 @@
     { "path": "./tsconfig.node.json" },
     { "path": "./tsconfig.test.json" }
   ],
-  "paths": {
-    "hooks/*": ["src/hooks/*"],
-    "components/*": ["src/components/*"],
-    "graphql/*": ["src/graphql/*"],
-    "types/*": ["src/types/*"],
-    "contexts/*": ["src/contexts/*"],
-    "lib/*": ["src/lib/*"]
+  "compilerOptions": {
+    "paths": {
+      "hooks/*": ["src/hooks/*"],
+      "components/*": ["src/components/*"],
+      "graphql/*": ["src/graphql/*"],
+      "types/*": ["src/types/*"],
+      "contexts/*": ["src/contexts/*"],
+      "lib/*": ["src/lib/*"]
+    }
   }
 }
