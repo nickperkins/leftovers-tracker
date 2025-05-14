@@ -39,9 +39,21 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: javascript
+          queries: +security-and-quality
 
       - name: Run tests with coverage
         run: npx jest --coverage --runInBand
+
+      - name: Move coverage folders out of analysis scope
+        run: |
+          mv coverage ../coverage || true
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+      - name: Move coverage folder back for upload
+        run: |
+          mv ../coverage coverage || true
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -52,8 +64,6 @@ jobs:
           name: codecov-server
           fail_ci_if_error: true
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
   client-ci:
     runs-on: ubuntu-latest
     defaults:
@@ -85,9 +95,21 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: javascript
+          queries: +security-and-quality
 
       - name: Run tests with coverage
         run: npx jest --coverage --runInBand
+
+      - name: Move coverage folders out of analysis scope
+        run: |
+          mv coverage ../coverage || true
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+      - name: Move coverage folder back for upload
+        run: |
+          mv ../coverage coverage || true
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -97,6 +119,3 @@ jobs:
           flags: client
           name: codecov-client
           fail_ci_if_error: true
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
