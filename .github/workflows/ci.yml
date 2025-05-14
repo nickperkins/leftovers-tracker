@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  security-events: write
+
 jobs:
   server-ci:
     runs-on: ubuntu-latest
