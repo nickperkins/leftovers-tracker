@@ -57,7 +57,7 @@ const Dashboard = () => {
                 mb: 3,
                 px: 2
               }}>
-                <LeftoverCard leftover={leftover} onSelect={() => { window.location.href = `/details/${leftover.id}`; }} />
+                <LeftoverCard leftover={leftover} onSelect={() => { navigate(`/details/${leftover.id}`); }} />
               </Box>
             ))}
         </Box>
