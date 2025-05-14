@@ -1,6 +1,6 @@
 # Leftovers Tracker
 
-[![CI](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci-client.yml/badge.svg)](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci.yml)
+[![CI](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci.yml)
 [![codecov-client](https://codecov.io/gh/nickperkins/leftovers-tracker/branch/main/graph/badge.svg?flag=client)](https://codecov.io/gh/nickperkins/leftovers-tracker)
 [![codecov-server](https://codecov.io/gh/nickperkins/leftovers-tracker/branch/main/graph/badge.svg?flag=server)](https://codecov.io/gh/nickperkins/leftovers-tracker)
 
