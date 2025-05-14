@@ -1,12 +1,11 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" },
-    { "path": "./tsconfig.test.json" }
-  ],
+  "extends": "./tsconfig.app.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "types": [
+      "@testing-library/jest-dom",
+      "jest"
+    ],
+    "jsx": "react-jsx",
     "paths": {
       "hooks/*": ["src/hooks/*"],
       "components/*": ["src/components/*"],
@@ -15,5 +14,6 @@
       "contexts/*": ["src/contexts/*"],
       "lib/*": ["src/lib/*"]
     }
-  }
+  },
+  "include": ["src", "setupTests.ts"]
 }
