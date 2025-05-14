@@ -32,9 +32,8 @@ jobs:
       # - name: Lint (ESLint)
       #   run: npx eslint . --ext .js,.ts
 
-      # TODO: Uncomment when TypeScript is configured
-      # - name: Type Check (TypeScript)
-      #   run: npx tsc --noEmit
+      - name: Type Check (TypeScript)
+        run: npx tsc --noEmit -p ./tsconfig.json
 
       - name: Security Audit (npm audit)
         run: npm audit --audit-level=moderate
@@ -83,7 +82,7 @@ jobs:
         run: npx eslint . --ext .js,.jsx,.ts,.tsx
 
       - name: Type Check (TypeScript)
-        run: npx tsc --noEmit
+        run: npx tsc --noEmit -p ./tsconfig.json
 
       - name: Security Audit (npm audit)
         run: npm audit --audit-level=moderate
