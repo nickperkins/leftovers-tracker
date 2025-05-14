@@ -1,6 +1,3 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Container,
   Typography,

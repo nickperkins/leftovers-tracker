@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Stack } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import React from 'react';
 import { EditOutlined as EditIcon, Delete as DeleteIcon, CheckCircle as ConsumeIcon, RestaurantMenu as EatPortionIcon } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';

@@ -17,8 +17,6 @@ import {
   InputAdornment
 } from '@mui/material';
 import {
-  Kitchen as FridgeIcon,
-  AcUnit as FreezerIcon,
   Warning as WarningIcon
 } from '@mui/icons-material';
 import { useLeftoverDetailsLogic } from 'hooks/useLeftoverDetailsLogic';

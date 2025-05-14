@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_LEFTOVER, DELETE_LEFTOVER, CONSUME_LEFTOVER, CONSUME_PORTION } from '../graphql/leftovers';
-import { Leftover } from '../types/leftover.types';
 
 export function useLeftoverDetailsLogic() {
   const { id } = useParams<{ id: string }>();
