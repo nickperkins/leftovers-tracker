@@ -19,7 +19,6 @@
     "@mui/x-date-pickers": "^8.2.0",
     "date-fns": "^4.1.0",
     "graphql": "^16.11.0",
-    "graphql-tag": "^2.12.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.3"
