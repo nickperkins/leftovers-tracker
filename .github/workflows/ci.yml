@@ -25,8 +25,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint (ESLint)
-        run: npx eslint . --ext .js,.ts
+      # TODO: Uncomment when ESLint is configured
+      # - name: Lint (ESLint)
+      #   run: npx eslint . --ext .js,.ts
 
       - name: Type Check (TypeScript)
         run: npx tsc --noEmit
