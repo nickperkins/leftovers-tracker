@@ -1,8 +1,7 @@
 # Leftovers Tracker
 
-[![Client CI](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci-client.yml/badge.svg)](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci-client.yml)
+[![CI](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci.yml)
 [![codecov-client](https://codecov.io/gh/nickperkins/leftovers-tracker/branch/main/graph/badge.svg?flag=client)](https://codecov.io/gh/nickperkins/leftovers-tracker)
-[![Server CI](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci-server.yml/badge.svg)](https://github.com/nickperkins/leftovers-tracker/actions/workflows/ci-server.yml)
 [![codecov-server](https://codecov.io/gh/nickperkins/leftovers-tracker/branch/main/graph/badge.svg?flag=server)](https://codecov.io/gh/nickperkins/leftovers-tracker)
 
 A web application to track leftover meals in your freezer or fridge using GraphQL and React.
