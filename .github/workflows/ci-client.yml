@@ -1,4 +1,4 @@
-name: Codecov Coverage (Client)
+name: Client CI
 
 on:
   push:
