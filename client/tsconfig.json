@@ -6,6 +6,7 @@
     { "path": "./tsconfig.test.json" }
   ],
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
       "hooks/*": ["src/hooks/*"],
       "components/*": ["src/components/*"],
